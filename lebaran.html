@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ucapan Idul Fitri</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #0f9d58, #34a853);
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      text-align: center;
+      overflow: hidden;
+    }
+
+    .hidden { display: none; }
+
+    /* Bintang */
+    .stars {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      background-image: radial-gradient(white 1px, transparent 1px);
+      background-size: 25px 25px;
+      opacity: 0.4;
+      animation: moveStars 30s linear infinite;
+    }
+
+    @keyframes moveStars {
+      from { background-position: 0 0; }
+      to { background-position: 800px 800px; }
+    }
+
+    /* Bulan */
+    .moon {
+      position: absolute;
+      top: 30px;
+      right: 40px;
+      width: 70px;
+      height: 70px;
+      background: #fff;
+      border-radius: 50%;
+      box-shadow: -15px 0 0 8px #0f9d58;
+      animation: float 4s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50% { transform: translateY(-12px); }
+    }
+
+    /* Siluet masjid */
+    .mosque {
+      position: absolute;
+      bottom: 0;
+      width: 100%;
+      height: 120px;
+      background: url('https://i.ibb.co/0jqHpnp/mosque.png') repeat-x;
+      background-size: contain;
+      opacity: 0.3;
+    }
+
+    /* Container */
+    .container {
+      max-width: 500px;
+      padding: 25px;
+      background: rgba(0,0,0,0.3);
+      border-radius: 20px;
+      z-index: 2;
+      backdrop-filter: blur(5px);
+      box-shadow: 0 0 20px rgba(0,0,0,0.3);
+    }
+
+    h1 {
+      font-size: 20px;
+      line-height: 1.6;
+    }
+
+    .name {
+      margin-top: 15px;
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .btn-group {
+      margin-top: 20px;
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      background: white;
+      color: #0f9d58;
+      font-weight: bold;
+      cursor: pointer;
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      background: #f1f1f1;
+    }
+
+    .wa-btn {
+      margin-top: 15px;
+      background: #25D366;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+
+<div class="stars"></div>
+<div class="moon"></div>
+<div class="mosque"></div>
+
+<audio id="takbir" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
+
+<!-- PAGE 1 -->
+<div class="container" id="page1">
+  <h1>
+    Selamat Hari Raya Idul Fitri, mohon maaf lahir dan batin.<br><br>
+    Maafkan apabila saya banyak salah dan dosa kepada kalian semua.
+  </h1>
+
+  <div class="name">- Deni Wafdullah -</div>
+
+  <div class="btn-group">
+    <button id="maafBtn" onclick="maafkan()">Maafkan</button>
+    <button onclick="tidakMau()">Enggak</button>
+  </div>
+</div>
+
+<!-- PAGE 2 -->
+<div class="container hidden" id="page2">
+  <h1>
+    Terima kasih 😊<br><br>
+    Bagi THR dong 😄
+  </h1>
+
+  <button class="wa-btn" onclick="kirimWA()">Kirim ke WhatsApp</button>
+</div>
+
+<script>
+  let scale = 1;
+
+  function tidakMau() {
+    scale += 0.3;
+    const btn = document.getElementById("maafBtn");
+    btn.style.transform = `scale(${scale})`;
+  }
+
+  function maafkan() {
+    document.getElementById("page1").classList.add("hidden");
+    document.getElementById("page2").classList.remove("hidden");
+    document.getElementById("takbir").play();
+    confetti();
+  }
+
+  function kirimWA() {
+    const text = encodeURIComponent("Selamat Hari Raya Idul Fitri, mohon maaf lahir dan batin 🙏");
+    window.open(`https://wa.me/?text=${text}`, '_blank');
+  }
+
+  function confetti() {
+    const colors = ['#fff', '#ffd700', '#00ffcc', '#ff69b4'];
+    for (let i = 0; i < 80; i++) {
+      let div = document.createElement('div');
+      div.style.position = 'absolute';
+      div.style.width = '8px';
+      div.style.height = '8px';
+      div.style.background = colors[Math.floor(Math.random()*colors.length)];
+      div.style.top = '0px';
+      div.style.left = Math.random() * window.innerWidth + 'px';
+      div.style.opacity = Math.random();
+      div.style.transition = 'top 2s linear';
+      document.body.appendChild(div);
+
+      setTimeout(() => {
+        div.style.top = window.innerHeight + 'px';
+      }, 10);
+
+      setTimeout(() => {
+        div.remove();
+      }, 2000);
+    }
+  }
+</script>
+
+</body>
+</html>
